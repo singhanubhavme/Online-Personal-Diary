@@ -1,0 +1,24 @@
+{
+  "name": "online-personal-diary",
+  "version": "1.0.0",
+  "description": "Online Diary",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "keywords": [
+    "diary",
+    "personal"
+  ],
+  "author": "Anubhav Singh",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "express-session": "^1.17.3",
+    "mongoose": "^6.3.3"
+  }
+}
