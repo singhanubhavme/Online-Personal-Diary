@@ -12,7 +12,12 @@ function getTimestamp() {
 module.exports.createDailyDiary = (req, res) => {
     const { username, content, headerImageURL } = req.body;
     const timestamp = getTimestamp();
-    const doc = new Diary({ username: username, content: content, headerImageURL: headerImageURL, timestamp: timestamp });
+    const doc = new Diary({ 
+        username: username, 
+        content: content, 
+        headerImageURL: headerImageURL, 
+        timestamp: timestamp 
+    });
     doc.save()
         .then(() => res.status(201).send('Document Created'))
         .catch((err) => res.status(404).send('Cannot Create Document ', err))

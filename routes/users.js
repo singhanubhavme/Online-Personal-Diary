@@ -15,4 +15,3 @@ router.get('/login', users.getLogin);
 router.get('/', users.home);
 
 module.exports = router;
-        
