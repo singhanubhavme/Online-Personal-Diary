@@ -3,8 +3,9 @@ const app = express();
 const mongoose = require('mongoose');
 const session = require('express-session');
 const dotenv = require('dotenv').config();
+const path = require('path');
 
-const userRoutes = require('./routes/users').default;
+const userRoutes = require('./routes/users');
 const dairyRoutes = require('./routes/diary');
 
 app.use(express.urlencoded({ extended: true }));
@@ -25,9 +26,15 @@ const sessionConfig = session({
 });
 app.use(sessionConfig);
 
+app.use((req, res, next) => {
+    res.locals.currentUser = req.session.user_id;
+    res.locals.fullname = req.session.fullname;
+    next();
+});
 
 app.set('view engine', 'ejs');
-app.set('views', 'views');
+
+app.set('views', path.join(__dirname, 'views'));
 app.use(express.static('public'));
 
 // routes

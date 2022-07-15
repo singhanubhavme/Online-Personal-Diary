@@ -1,7 +1,8 @@
+const ShortUniqueId = require("short-unique-id");
+const QuillDeltaToHtmlConverter = require('quill-delta-to-html').QuillDeltaToHtmlConverter;
 const Diary = require('../models/diary');
 const User = require('../models/user');
 
-// get current timestamp
 function getTimestamp() {
     const current = new Date();
     return new Date(Date.UTC(current.getFullYear(),
@@ -10,51 +11,60 @@ function getTimestamp() {
 }
 
 module.exports.createDailyDiary = (req, res) => {
-    const { username, content, headerImageURL } = req.body;
-    const timestamp = getTimestamp();
-    const doc = new Diary({ 
-        username: username, 
-        content: content, 
-        headerImageURL: headerImageURL, 
-        timestamp: timestamp 
-    });
-    doc.save()
-        .then(() => res.status(201).send('Document Created'))
-        .catch((err) => res.status(404).send('Cannot Create Document ', err))
-}
-
-module.exports.updateDailyDiary = (req, res) => {
-    const { username, timestamp, content, headerImageURL } = req.body;
-    Diary.findOneAndUpdate({ username: username, timestamp: timestamp },
-        {
-            content: content,
-            headerImageURL: headerImageURL
-        },
-        (err, docs) => {
-            if (docs) {
-                res.status(200).send('Diary Updated');
-            } else {
-                res.status(417).send('Cannot Update Diary');
-            }
-        })
-}
-
-module.exports.deleteDailyDiary = (req, res) => {
-    const { username, timestamp } = req.body;
-
-    Diary.findOneAndDelete({ username, timestamp }, (err, docs) => {
-        if (docs) {
-            res.status(200).send('Document Deleted');
+    const shortid = new ShortUniqueId({ length: 10 });
+    let uuid = shortid();
+    const uid = req.session.user_id;
+    User.findOne({ _id: uid }, (err, docs) => {
+        if (!err && docs) {
+            const username = docs.username;
+            const { content, title } = req.body;
+            const timestamp = getTimestamp();
+            const doc = new Diary({
+                username: username,
+                entryUID: uuid,
+                content: content,
+                title: title,
+                timestamp: timestamp
+            });
+            doc.save()
+                .then(() => res.redirect('/my-diary'))
+                .catch((err) => res.status(404).send(err))
         } else {
-            res.status(400).send('Cannot delete Document');
+            res.render("message", { msgid: 3 });
         }
     })
 }
 
-module.exports.create = (req, res) => {
-    res.render('create');
+module.exports.deleteDailyDiary = (req, res) => {
+    const username = req.session.username;
+    const { entryUID } = req.params;
+
+    Diary.findOneAndDelete({ username, entryUID }, (err, docs) => {
+        if (docs) {
+            res.render("message", { msgid: 5 });
+        } else {
+            res.render("message", { msgid: 3 });
+        }
+    })
 }
 
-module.exports.update = (req, res) => {
-    res.render('update');
-}
+module.exports.create = (req, res) => res.render('create');
+
+module.exports.getMyDiary = (req, res) => {
+    const username = req.session.username;
+    Diary.find({ username: username }, (err, docs) => {
+        if (!err && docs.length) {
+            const htmlArr = [];
+            for (let i = 0; i < docs.length; i++) {
+                const deltaOps = JSON.parse(docs[i].content).ops;
+                const converter = new QuillDeltaToHtmlConverter(deltaOps, {});
+                const html = converter.convert();
+                htmlArr.push(html);
+            }
+            if (htmlArr.length >= 1)
+                res.render('my-diary', { docs: docs, htmlArr: htmlArr });
+        } else {
+            res.render("message", { msgid: 6 });
+        }
+    })
+};

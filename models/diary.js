@@ -7,18 +7,21 @@ const diarySchema = new mongoose.Schema({
         required: true,
         unique: false
     },
+    entryUID: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    title:{
+        type:String,
+        required: true
+    },
     content: {
         type: String,
         required: true
     },
-
     timestamp: {
         type: Date,
-        required: true
-    },
-
-    headerImageURL: {
-        type: String,
         required: true
     }
 });

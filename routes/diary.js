@@ -4,15 +4,12 @@ const diary = require('../controllers/diary');
 
 const middleware = require('../middleware');
 
-router.post('/createDailyDiary',middleware.isLoggedIn, diary.createDailyDiary);
+router.post('/createDailyDiary', middleware.isLoggedIn, diary.createDailyDiary);
 
-router.post('/updateDailyDiary',middleware.isLoggedIn, diary.updateDailyDiary);
-
-router.post('/deleteDailyDiary',middleware.isLoggedIn, diary.deleteDailyDiary);
+router.get('/deleteDailyDiary/:entryUID', middleware.isLoggedIn, diary.deleteDailyDiary);
 
 router.get('/create', middleware.isLoggedIn, diary.create);
 
-router.get('/update', middleware.isLoggedIn, diary.update);
-
+router.get('/my-diary', middleware.isLoggedIn, diary.getMyDiary);
 
 module.exports = router;

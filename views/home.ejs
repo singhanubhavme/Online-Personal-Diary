@@ -1,3 +1,69 @@
 <%- include("partials/header.ejs") -%>
 
+<style>
+    .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+    }
+
+    @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+            font-size: 3.5rem;
+        }
+    }
+
+    .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+    }
+
+    @media (min-width: 992px) {
+        .rounded-lg-3 {
+            border-radius: .3rem;
+        }
+    }
+</style>
+
+<% if(fullname) { %>
+<h1 class="text-center pt-2" style="color:rgba(0, 0, 0, .8)">Welcome <%= fullname %></h1>
+<% } %>
+<div class="container my-5">
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+        <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+            <h1 class="display-4 fw-bold lh-1">Online Personal Diary</h1>
+            <p class="lead">
+                In this web app you can write something on your diary that will be stored in the database. That can be
+                retrieved just on a click. Start by registering now.
+            </p>
+            <% if(!fullname) { %>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+                <a href="/login">
+                    <button type="button" class="btn btn-success btn-lg px-4 me-md-2 fw-bold">Login</button>
+                </a>
+                <a href="/register">
+                    <button type="button" class="btn btn-outline-secondary btn-lg px-4">Register</button>
+                </a>
+            </div>
+            <% } else { %>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+                <a href="/create">
+                    <button type="button" class="btn btn-success btn-lg px-4 me-md-2 fw-bold">Write</button>
+                </a>
+                <a href="/logout">
+                    <button type="button" class="btn btn-outline-secondary btn-lg px-4">Logout</button>
+                </a>
+            </div>
+            <% } %>
+        </div>
+        <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
+            <img class="rounded-lg-3" src="images/diary.svg" alt="" height="400" width="400">
+        </div>
+    </div>
+</div>
 <%- include("partials/footer.ejs") -%>

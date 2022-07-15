@@ -2,16 +2,22 @@ const express = require('express');
 const router = express.Router();
 const users = require('../controllers/users');
 
-router.post('/register', users.register);
+router
+    .get('/register', users.getRegister)
+    .post('/register', users.register);
 
-router.post('/login', users.login);
+router
+    .get('/login', users.getLogin)
+    .post('/login', users.login);
 
-router.post('/logout', users.logout);
+router
+    .post('/logout', users.logout)
+    .get('/logout', users.logout);
 
-router.get('/register', users.getRegister);
+router
+    .get('/message');
 
-router.get('/login', users.getLogin);
-
-router.get('/', users.home);
+router
+    .get('/', users.home);
 
 module.exports = router;

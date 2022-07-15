@@ -1,0 +1,86 @@
+<%- include("partials/header.ejs") -%>
+<style>
+    .alert {
+        padding: 1em;
+        margin: 3em;
+    }
+</style>
+<% if(msgid === 1) { %>
+<div class="alert alert-danger alert-dismissible" role="alert">
+    <h4 class="alert-heading d-inline">Error</h4>
+    <p>
+        Invalid Username/Password
+    </p>
+    <div class="close">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+</div>
+<% } else if(msgid === 2) { %>
+<div class="alert alert-danger alert-dismissible" role="alert">
+    <h4 class="alert-heading">Error</h4>
+    <p>
+        You Should be logged in to Access this page.
+    </p>
+    <div class="close">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+</div>
+<% } else if(msgid === 3) { %>
+<div class="alert alert-danger alert-dismissible" role="alert">
+    <h4 class="alert-heading">Error</h4>
+    <p>
+        Something Went Wrong
+    </p>
+    <div class="close">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+</div>
+<% } else if(msgid === 4) { %>
+<div class="alert alert-danger alert-dismissible" role="alert">
+    <h4 class="alert-heading">Error</h4>
+    <p>
+        Username already Registered
+    </p>
+    <div class="close">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+</div>
+<% } else if(msgid === 5) { %>
+<div class="alert alert-success alert-dismissible" role="alert">
+    <h4 class="alert-heading">Success</h4>
+    <p>
+        Document deleted Successfully
+    </p>
+    <div class="close">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+</div>
+<% } else if(msgid === 6) { %>
+<div class="alert alert-warning alert-dismissible" role="alert">
+    <h4 class="alert-heading">Sorry</h4>
+    <p>
+        You haven't written any page,
+        <a href="/create"> write</a>
+        something.
+    </p>
+    <div class="close">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+</div>
+<% } %>
+
+<script>
+    document.querySelector('.close').addEventListener("click", () => {
+        setTimeout(() => {
+            window.location.href = '/';
+        }, 400);
+    })
+</script>
+
+<%- include("partials/footer.ejs") -%>

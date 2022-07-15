@@ -1,0 +1,47 @@
+<style>
+    .postcard.light .postcard__text:before {
+        background: none !important;
+    }
+
+    .content img {
+        max-width: 100%;
+    }
+</style>
+<%- include("partials/header.ejs") -%>
+<section class="light">
+    <div class="container py-2">
+        <div class="h3 text-center text-dark" id="pageHeaderTitle">My Diary</div>
+
+        <% for(let i=0 ; i < docs.length ; i++) { %>
+        <article class="postcard light blue" style="position: relative;">
+            <div class="postcard__text t-dark">
+                <h1 class="postcard__title blue"><a href="#"><%= docs[i].title %></a></h1>
+                <div class="postcard__subtitle small">
+                    <time datetime="<%= docs[i].timestamp %>">
+                        <i class="fas fa-calendar-alt mr-2"></i>
+                        <%= docs[i].timestamp %>
+                    </time>
+                </div>
+                <br>
+                <div class="postcard__bar"></div>
+                <div class="postcard__preview-txt content">
+                    <%= htmlArr[i] %>
+                </div>
+            </div>
+            <a href="/deleteDailyDiary/<%= docs[i].entryUID %>">
+                <button class="btn btn-secondary" type="submit" style="position:absolute; z-index:1000; right:0">
+                    Delete
+                </button>
+            </a>
+        </article>
+        <% } %>
+    </div>
+</section>
+
+<script>
+    const content = document.querySelectorAll(".content");
+    for (let i = 0; i < content.length; i++) {
+        content[i].innerHTML = content[i].innerText;
+    }
+</script>
+<%- include("partials/footer.ejs") -%>
