@@ -38,7 +38,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static('public'));
 
 // routes
-
 app.use('/', userRoutes);
 app.use('/', dairyRoutes);
 

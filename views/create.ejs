@@ -1,6 +1,6 @@
 <%- include("partials/header.ejs") -%>
 <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-<link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
+<!-- <link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet"> -->
 <style>
     .heading {
         height: 2em !important;
@@ -53,13 +53,11 @@
                 }],
             ]
         },
-        // scrollingContainer: '#scrolling-container', 
         placeholder: 'Hello There....',
         theme: 'snow' // or 'bubble'
     });
     var form = document.querySelector('form');
     form.onsubmit = async () => {
-        // Populate hidden form on submit
         var about = document.querySelector('input[name=content]');
         about.value = await JSON.stringify(quill.getContents());
     }
